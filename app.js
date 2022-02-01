@@ -1,9 +1,6 @@
 const express = require('express');
 const morgan = require('morgan');
 
-const {
-  getAlbums
-} = require('./services/albums');
 
 function setup(app) {
   app.use(morgan('dev'));
