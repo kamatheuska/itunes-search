@@ -1,25 +1,21 @@
 const {
   filterAlbumDuplicates,
-  getITunesParams,
-  handleApiError,
-  hasApiError,
 } = require('../helpers');
 
 const {
+  handleApiError,
+  hasApiError,
+} = require('../helpers/error');
+
+const {
+  buildAlbumsUrl
+} = require('../helpers/url');
+
+const {
   API_LIMIT,
-  ITUNES_BASE_API_URL,
 } = require('../config');
 
 const fetch = require('node-fetch');
-
-const buildAlbumsUrl = (artist, params) => {
-  const itunesParams = getITunesParams(params);
-  const url = `${ITUNES_BASE_API_URL}/search?term=${artist}&${itunesParams}`;
-
-  console.info('Fetching from Itunes: ', url);
-
-  return url;
-}
 
 const getAlbums = async (artist, { limit = API_LIMIT } = {}) => {
   const apiParams = {
