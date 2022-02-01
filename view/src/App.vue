@@ -1,42 +1,40 @@
 <template>
   <div class="container">
     <main class="main">
-      <h1>Search on Itunes</h1>
+      <h1 data-cy="title">Search on Itunes</h1>
       <section class="section section__form">
         <form class="form" @submit.prevent="getAlbums">
-          <input v-model="form.artist" type="text" name="search" />
+          <input data-cy="artist-input" v-model="form.artist" type="text" name="search" />
           <br>
-          <button type="submit">SEARCH</button>
+          <button data-cy="submit-button" type="submit">SEARCH</button>
         </form>
       </section>
-      <section>
-        <template v-if="hasSearched">
-          <div class="grid" v-if="hasAlbums">
-            <a
-              v-for="album in albums"
-              :key="album.collectionId"
-              :href="album.collectionViewUrl"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="album"
-            >
-              <figure>
-                <img :src="album.artworkUrl100" :alt="album.collectionName" />
-                <h3>
-                  {{ album.collectionName }}
-                </h3>
-                <p class="album__copyright">
-                  {{ album.copyright }}
-                </p>
-              </figure>
-            </a>
-          </div>
-          <div v-else>
-            <p>No albums found for this artist</p>
-          </div>
-        </template>
+      <template v-if="hasSearched">
+        <section class="grid" v-if="hasAlbums" data-cy="albums">
+          <a
+            v-for="album in albums"
+            :key="album.collectionId"
+            :href="album.collectionViewUrl"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="album"
+          >
+            <figure>
+              <img :src="album.artworkUrl100" :alt="album.collectionName" />
+              <h3>
+                {{ album.collectionName }}
+              </h3>
+              <p class="album__copyright">
+                {{ album.copyright }}
+              </p>
+            </figure>
+          </a>
+        </section>
+        <div v-else data-cy="no-albums-found">
+          <p>No albums found for this artist</p>
+        </div>
+      </template>
 
-      </section>
     </main>
   </div>
 </template>
@@ -152,12 +150,15 @@ export default {
   font-size: 0.8rem;
 }
 
-@media all and  (min-width: 800px) {
+@media (min-width: 800px) {
   .container {
     padding: 5rem 3rem;
   }
+}
+
+@media (min-width: 1300px) {
   .main {
-    max-width: 70vh;
+    max-width: 80vh;
   }
 }
 </style>
