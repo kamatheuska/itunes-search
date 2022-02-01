@@ -38,12 +38,23 @@ describe('🌳  Integration tests', () => {
   afterAll((() => createdServer.close(handleTestError)));
 
   describe('🌴 GET /api/itunes', () => {
-    it('🌱 should return the itunes albums', async () => {
+    it('🌱 should return itunes albums for the given artist', async () => {
       const artist = 'Tom+Jobim';
       const response = await request(createdApp).get(`/api/artists/${artist}/albums`);
+
       expect(response.status).toBe(200);
-      expect(response.body.resultCount).toBeDefined();
-      expect(response.body.results.length).toBeDefined();
+      expect(response.body).toBeDefined();
+      expect(Array.isArray(response.body.results)).toBeTruthy();
+    });
+
+    it('🌱 should return an empty array if the artist is not found', async () => {
+      const artist = 'Some+Inexistent+Foo+Bar+Artist';
+      const response = await request(createdApp).get(`/api/artists/${artist}/albums`);
+
+      expect(response.status).toBe(200);
+      expect(response.body).toBeDefined();
+      expect(Array.isArray(response.body.results)).toBeTruthy();
+      expect(response.body.results).toHaveLength(0);
     });
   });
 });

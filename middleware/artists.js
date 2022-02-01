@@ -14,7 +14,7 @@ const getAlbumsFromArtist = async (req, res, next) => {
     if (!parsedArtist) throw new Error('Please provide an artist');
 
     const albums = await getAlbums(parsedArtist);
-    res.send(albums);
+    res.send({ results: albums });
   } catch (error) {
     next(error);
   }
