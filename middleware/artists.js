@@ -4,13 +4,13 @@ const {
 
 const {
   parseQuery
-} = require('../helpers');
+} = require('../helpers/query');
 
 const getAlbumsFromArtist = async (req, res, next) => {
   const artist = req.params.artist;
-  const parsedArtist = parseQuery(artist);
-
+  
   try {
+    const parsedArtist = parseQuery(artist);
     if (!parsedArtist) throw new Error('Please provide an artist');
 
     const albums = await getAlbums(parsedArtist);
