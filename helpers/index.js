@@ -1,3 +1,7 @@
+const {
+  isCollectionNameDuplicated
+} = require('./album');
+
 const getITunesParams = (params) => {
   return new URLSearchParams(params).toString();
 }
@@ -14,7 +18,12 @@ const handleApiError = (errorMessage = 'Itunes API Error') => {
 
 const hasApiError = (response) => response.status !== 200;
 
+const filterAlbumDuplicates = (album, index, list) => {
+  return index === list.findIndex(isCollectionNameDuplicated(album.collectionName));
+}
+
 module.exports = {
+  filterAlbumDuplicates,
   getITunesParams,
   handleApiError,
   hasApiError,
